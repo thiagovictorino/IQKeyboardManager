@@ -5,6 +5,7 @@
 
 
 #import "AppDelegate.h"
+#import "IQKeyboardManager.h"
 
 @implementation AppDelegate
 
@@ -12,6 +13,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[IQKeyboardManager sharedManager] setDoneText:@"Custom"];
+
     return YES;
 }
 

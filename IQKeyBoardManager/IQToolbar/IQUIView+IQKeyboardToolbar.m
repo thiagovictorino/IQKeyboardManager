@@ -556,7 +556,7 @@
     NSMutableArray *items = [[NSMutableArray alloc] init];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:titleText style:UIBarButtonItemStyleDone target:target action:rightButtonAction];
+    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:rightButtonTitle style:UIBarButtonItemStyleDone target:target action:rightButtonAction];
     
     if (IQ_IS_IOS7_OR_GREATER)
     {
@@ -616,12 +616,14 @@
         
         if (IQ_IS_IOS7_OR_GREATER)
         {
+            CGSize size = [titleText sizeWithFont:[UIFont systemFontOfSize:12.0]];
+            
             /*
              72.5 next/previous maximum x.
              50 done button frame.
              8+8 distance maintenance
              */
-            buttonFrame = CGRectMake(0, 0, toolbar.frame.size.width-72.5-50.0-16, 44);
+            buttonFrame = CGRectMake(0, 0, toolbar.frame.size.width-size.width, 44);
         }
         else
         {

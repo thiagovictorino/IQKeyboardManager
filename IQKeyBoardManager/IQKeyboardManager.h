@@ -113,6 +113,11 @@ extern NSInteger const kIQPreviousNextButtonToolbarTag;
  */
 @property(nonatomic, strong) UIFont *placeholderFont;
 
+/**
+ Done button text, If nothing is provided then system default 'Done' button will be used.
+ */
+@property(nonatomic, strong) NSString *doneText;
+
 ///--------------------------
 /// @name UITextView handling
 ///--------------------------

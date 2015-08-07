@@ -1576,7 +1576,17 @@ void _IQShowLog(NSString *logString);
             if (doneToolbar == nil)
             {
                 //Now adding textField placeholder text as title of IQToolbar  (Enhancement ID: #27)
-                [textField addDoneOnKeyboardWithTarget:self action:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                
+                //Supporting Custom Done button text (Enhancement ID: #209)
+                if (_doneText)
+                {
+                    [textField addRightButtonOnKeyboardWithText:_doneText target:self action:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                }
+                else
+                {
+                    [textField addDoneOnKeyboardWithTarget:self action:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                }
+                
                 doneToolbar = textField.inputAccessoryView;
                 doneToolbar.tag = kIQDoneButtonToolbarTag; //  (Bug ID: #78)
             }
@@ -1637,7 +1647,17 @@ void _IQShowLog(NSString *logString);
             if (![textField inputAccessoryView] || [[textField inputAccessoryView] tag] == kIQDoneButtonToolbarTag)
             {
                 //Now adding textField placeholder text as title of IQToolbar  (Enhancement ID: #27)
-                [textField addPreviousNextDoneOnKeyboardWithTarget:self previousAction:@selector(previousAction:) nextAction:@selector(nextAction:) doneAction:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                
+                //Supporting Custom Done button text (Enhancement ID: #209)
+                if (_doneText)
+                {
+                    [textField addPreviousNextRightOnKeyboardWithTarget:self rightButtonTitle:_doneText previousAction:@selector(previousAction:) nextAction:@selector(nextAction:) rightButtonAction:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                }
+                else
+                {
+                    [textField addPreviousNextDoneOnKeyboardWithTarget:self previousAction:@selector(previousAction:) nextAction:@selector(nextAction:) doneAction:@selector(doneAction:) shouldShowPlaceholder:_shouldShowTextFieldPlaceholder];
+                }
+                
                 textField.inputAccessoryView.tag = kIQPreviousNextButtonToolbarTag; //  (Bug ID: #78)
             }
             

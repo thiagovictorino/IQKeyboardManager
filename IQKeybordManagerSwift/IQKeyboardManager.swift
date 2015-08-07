@@ -446,6 +446,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     @param disabledClass Class in which library should re-enable adjust view to show textField.
     */
     func removeDisableInViewControllerClass(disabledClass : AnyClass) {
+        
         _disabledClasses.removeObject(NSStringFromClass(disabledClass))
     }
     
