@@ -227,10 +227,10 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             if let textFields = responderViews() {
                 if let  textFieldRetain = _textFieldView {
                     
-                    if contains(textFields, textFieldRetain) == true {
+                    if textFields.contains(textFieldRetain) == true {
                         
                         //Getting index of current textField.
-                        if let index = find(textFields, textFieldRetain) {
+                        if let index = textFields.indexOf(textFieldRetain) {
 
                             //If it is not first textField. then it's previous object canBecomeFirstResponder.
                             if index > 0 {
@@ -253,10 +253,10 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             //Getting all responder view's.
             if let textFields = responderViews() {
                 if let  textFieldRetain = _textFieldView {
-                    if contains(textFields, textFieldRetain) == true {
+                    if textFields.contains(textFieldRetain) == true {
                         
                         //Getting index of current textField.
-                        if let index = find(textFields, textFieldRetain) {
+                        if let index = textFields.indexOf(textFieldRetain) {
                             
                             //If it is not first textField. then it's previous object canBecomeFirstResponder.
                             if index < textFields.count-1 {
@@ -278,10 +278,10 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         //Getting all responder view's.
         if let  textFieldRetain = _textFieldView {
             if let textFields = responderViews() {
-                if contains(textFields, textFieldRetain) == true {
+                if textFields.contains(textFieldRetain) == true {
                     
                     //Getting index of current textField.
-                    if let index = find(textFields, textFieldRetain) {
+                    if let index = textFields.indexOf(textFieldRetain) {
                         
                         //If it is not first textField. then it's previous object becomeFirstResponder.
                         if index > 0 {
@@ -316,10 +316,10 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         //Getting all responder view's.
         if let  textFieldRetain = _textFieldView {
             if let textFields = responderViews() {
-                if contains(textFields, textFieldRetain) == true {
+                if textFields.contains(textFieldRetain) == true {
                     
                     //Getting index of current textField.
-                    if let index = find(textFields, textFieldRetain) {
+                    if let index = textFields.indexOf(textFieldRetain) {
                         //If it is not last textField. then it's next object becomeFirstResponder.
                         if index < textFields.count-1 {
                             
@@ -494,7 +494,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     @param disabledClass Class which is to check for it's disability.
     */
     func isDisableInViewControllerClass(disabledClass : AnyClass) -> Bool {
-        return contains(_disabledClasses, NSStringFromClass(disabledClass))
+        return _disabledClasses.contains(NSStringFromClass(disabledClass))
     }
     
     /**
@@ -521,7 +521,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     @param toolbarDisabledClass Class which is to check for toolbar disability.
     */
     func isDisableToolbarInViewControllerClass(toolbarDisabledClass : AnyClass) -> Bool {
-        return contains(_disabledToolbarClasses, NSStringFromClass(toolbarDisabledClass))
+        return _disabledToolbarClasses.contains(NSStringFromClass(toolbarDisabledClass))
     }
     
     /**
@@ -548,7 +548,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     @param toolbarPreviousNextConsideredClass Class which is to check for previous next consideration
     */
     func isConsiderToolbarPreviousNextInViewClass(toolbarPreviousNextConsideredClass : AnyClass) -> Bool {
-        return contains(_toolbarPreviousNextConsideredClass, NSStringFromClass(toolbarPreviousNextConsideredClass))
+        return _toolbarPreviousNextConsideredClass.contains(NSStringFromClass(toolbarPreviousNextConsideredClass))
     }
 
 
@@ -1312,7 +1312,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                     for disabledClassString in _disabledClasses {
                         
                         //If viewController is kind of disabled viewController class, then ignoring to adjust view.
-                        if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString as! String))!) {
+                        if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString))!) {
                             shouldIgnore = true
                             break
                         }
@@ -1588,7 +1588,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 for disabledClassString in _disabledClasses {
                     
                     //If viewController is kind of disabled viewController class, then ignoring to adjust view.
-                    if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString as! String)!)) {
+                    if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString))!) {
                         shouldIgnore = true
                         break
                     }
@@ -1696,7 +1696,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         //If find any consider responderView in it's upper hierarchy then will get deepResponderView.
         for disabledClassString in _toolbarPreviousNextConsideredClass {
             
-                if _textFieldView?.superviewOfClassType(NSClassFromString(disabledClassString as! String)!) != nil {
+                if _textFieldView?.superviewOfClassType(NSClassFromString(disabledClassString)!) != nil {
                     break
                 }
         }
@@ -1732,7 +1732,7 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             
             for disabledClassString in _disabledToolbarClasses {
                 
-                if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString as! String))!) {
+                if textFieldViewController.isKindOfClass((NSClassFromString(disabledClassString))!) {
                     
                     removeToolbarIfRequired()
                     return

@@ -293,9 +293,9 @@ class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextViewDele
 
         if let unwrappedTextFields = textFields {
             
-            if contains(unwrappedTextFields, view) == true {
+            if unwrappedTextFields.contains(view) == true {
                 //Getting index of current textField.
-                if let index = find(unwrappedTextFields, view) {
+                if let index = unwrappedTextFields.indexOf(view) {
                     //If it is not last textField. then it's next object becomeFirstResponder.
                     if index < (unwrappedTextFields.count - 1) {
                         

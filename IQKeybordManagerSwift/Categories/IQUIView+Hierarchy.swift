@@ -172,8 +172,7 @@ extension UIView {
     func deepResponderViews()->[UIView] {
         
         //subviews are returning in opposite order. So I sorted it according the frames 'y'.
-        
-        let subViews = subviews.sorted({ (obj1 : AnyObject, obj2 : AnyObject) -> Bool in
+        let subViews = subviews.sort({ (obj1 : AnyObject, obj2 : AnyObject) -> Bool in
             
             let view1 = obj1 as! UIView
             let view2 = obj2 as! UIView
@@ -193,7 +192,7 @@ extension UIView {
         //Array of (UITextField/UITextView's).
         var textfields = [UIView]()
         
-        for textField in subViews as! [UIView] {
+        for textField in subViews {
             
             if textField._IQcanBecomeFirstResponder() == true {
                 textfields.append(textField)
