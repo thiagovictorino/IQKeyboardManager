@@ -27,12 +27,20 @@ import UIKit
 /** @abstract   IQToolbar for IQKeyboardManager.    */
 class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
 
+    override class func initialize() {
+        
+        superclass()?.initialize()
+        
+        self.appearance().barTintColor = nil
+        self.appearance().backgroundColor = nil
+    }
+    
     var titleFont : UIFont? {
         
         didSet {
             
             if items != nil {
-                for item in items as! [UIBarButtonItem] {
+                for item in items! {
                     
                     if item is IQTitleBarButtonItem == true {
                         (item as! IQTitleBarButtonItem).font = titleFont
@@ -47,7 +55,7 @@ class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         didSet {
             
             if items != nil {
-                for item in items as! [UIBarButtonItem] {
+                for item in items! {
                     
                     if item is IQTitleBarButtonItem == true {
                         (item as! IQTitleBarButtonItem).title = title
@@ -62,16 +70,15 @@ class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         
         sizeToFit()
         autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        
         tintColor = UIColor .blackColor()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         sizeToFit()
-        autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-        
+        autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+
         tintColor = UIColor .blackColor()
     }
 
@@ -85,10 +92,9 @@ class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         
         didSet {
             if items != nil {
-                for item in items as! [UIBarButtonItem] {
-                    
+                for item in items! {                    
                     if item is IQTitleBarButtonItem {
-                        (item as! IQTitleBarButtonItem).tintColor = tintColor
+                        item.tintColor = tintColor
                     }
                 }
             }

@@ -1,5 +1,5 @@
 //
-//  IQTitleBarButtonItem.swift
+//  IQUITextFieldView+Additions.swift
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-15 Iftekhar Qurashi.
 //
@@ -21,52 +21,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
+import Foundation
 import UIKit
 
-class IQTitleBarButtonItem: UIBarButtonItem {
-   
-    var font : UIFont? {
-    
-        didSet {
-            if let unwrappedFont = font {
-                _titleLabel?.font = unwrappedFont
+/**
+Uses default keyboard distance for textField.
+*/
+let kIQUseDefaultKeyboardDistance = CGFloat.max
+
+private var kIQKeyboardDistanceFromTextField = "kIQKeyboardDistanceFromTextField"
+
+/**
+UIView category for managing UITextField/UITextView
+*/
+extension UIView {
+
+    /**
+    To set customized distance from keyboard for textField/textView. Can't be less than zero
+    */
+    var keyboardDistanceFromTextField: CGFloat {
+        get {
+            
+            if let aValue = objc_getAssociatedObject(self, &kIQKeyboardDistanceFromTextField) as? CGFloat {
+                return aValue
             } else {
-                _titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+                return kIQUseDefaultKeyboardDistance
             }
         }
-    }
-    
-    private var _titleLabel : UILabel?
-    private var _titleView : UIView?
-
-    override init() {
-        super.init()
-    }
-    
-    init(frame : CGRect, title : String?) {
-        super.init()
-        self.style = .Plain
-
-
-        _titleView = UIView(frame: frame)
-        _titleView?.backgroundColor = UIColor.clearColor()
-        _titleView?.autoresizingMask = .FlexibleWidth
-        
-        _titleLabel = UILabel(frame: _titleView!.bounds)
-        _titleLabel?.textColor = UIColor.lightGrayColor()
-        _titleLabel?.backgroundColor = UIColor.clearColor()
-        _titleLabel?.textAlignment = .Center
-        _titleLabel?.text = title
-        _titleLabel?.autoresizingMask = .FlexibleWidth
-
-        font = UIFont.boldSystemFontOfSize(12.0)
-        _titleLabel?.font = self.font
-        customView = _titleLabel
-        enabled = false
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        set(newValue) {
+            objc_setAssociatedObject(self, &kIQKeyboardDistanceFromTextField, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
 }
+
