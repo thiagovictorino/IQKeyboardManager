@@ -352,12 +352,14 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
         if canGoPrevious == true {
             
-//            if let textFieldRetain = _textFieldView {
-                /*let isAcceptAsFirstResponder = */ goPrevious()
-//                if isAcceptAsFirstResponder && textFieldRetain.previousInvocation == nil {
-//                    textFieldRetain.previousInvocation.invoke()
-//                }
-//            }
+            if let textFieldRetain = _textFieldView {
+                let isAcceptAsFirstResponder = goPrevious()
+                
+                if isAcceptAsFirstResponder && textFieldRetain.previousInvocation.target != nil && textFieldRetain.previousInvocation.selector != nil {
+                    
+                    UIApplication.sharedApplication().sendAction(textFieldRetain.previousInvocation.selector!, to: textFieldRetain.previousInvocation.target, from: textFieldRetain, forEvent: nil)
+                }
+            }
         }
     }
     
@@ -372,13 +374,14 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
         if canGoNext == true {
             
-//            if let textFieldRetain = _textFieldView {
-                /*let isAcceptAsFirstResponder = */ goNext()
+            if let textFieldRetain = _textFieldView {
+                let isAcceptAsFirstResponder = goNext()
                 
-//                if isAcceptAsFirstResponder && textFieldRetain.nextInvocation == nil {
-//                    textFieldRetain.nextInvocation.invoke()
-//                }
-//            }
+                if isAcceptAsFirstResponder && textFieldRetain.nextInvocation.target != nil && textFieldRetain.nextInvocation.selector != nil {
+                    
+                    UIApplication.sharedApplication().sendAction(textFieldRetain.nextInvocation.selector!, to: textFieldRetain.nextInvocation.target, from: textFieldRetain, forEvent: nil)
+                }
+            }
         }
     }
     
@@ -391,14 +394,15 @@ class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             UIDevice.currentDevice().playInputClick()
         }
         
-//        if let textFieldRetain = _textFieldView {
+        if let textFieldRetain = _textFieldView {
             //Resign textFieldView.
-            /*let isResignedFirstResponder = */ resignFirstResponder()
+            let isResignedFirstResponder = resignFirstResponder()
             
-//                if isResignedFirstResponder && textFieldRetain.doneInvocation == nil {
-//                    textFieldRetain.doneInvocation.invoke()
-//                }
-//        }
+            if isResignedFirstResponder && textFieldRetain.doneInvocation.target != nil  && textFieldRetain.doneInvocation.selector != nil{
+                
+                UIApplication.sharedApplication().sendAction(textFieldRetain.doneInvocation.selector!, to: textFieldRetain.doneInvocation.target, from: textFieldRetain, forEvent: nil)
+            }
+        }
     }
     
     /** Resigning on tap gesture.   (Enhancement ID: #14)*/
