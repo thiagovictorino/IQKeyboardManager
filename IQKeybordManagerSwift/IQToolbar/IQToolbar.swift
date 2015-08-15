@@ -73,7 +73,7 @@ class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         tintColor = UIColor .blackColor()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         sizeToFit()

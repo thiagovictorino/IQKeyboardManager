@@ -27,7 +27,7 @@ import UIKit
 /** @abstract UITextView with placeholder support   */
 class IQTextView : UITextView {
 
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshPlaceholder", name: UITextViewTextDidChangeNotification, object: self)
     }
