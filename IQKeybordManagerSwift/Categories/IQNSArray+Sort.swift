@@ -36,9 +36,9 @@ extension Array {
     /**
     Returns the array by sorting the UIView's by their tag property.
     */
-    func sortedArrayByTag() -> [T] {
+    func sortedArrayByTag() -> [Element] {
         
-        return sort({ (obj1 : T, obj2 : T) -> Bool in
+        return sort({ (obj1 : Element, obj2 : Element) -> Bool in
             
             let view1 = obj1 as! UIView
             let view2 = obj2 as! UIView
@@ -50,9 +50,9 @@ extension Array {
     /**
     Returns the array by sorting the UIView's by their tag property.
     */
-    func sortedArrayByPosition() -> [T] {
+    func sortedArrayByPosition() -> [Element] {
         
-        return sort({ (obj1 : T, obj2 : T) -> Bool in
+        return sort({ (obj1 : Element, obj2 : Element) -> Bool in
             
             let view1 = obj1 as! UIView
             let view2 = obj2 as! UIView

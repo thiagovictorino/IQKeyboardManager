@@ -20,21 +20,21 @@ class ManualToolbarViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textField1.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction"), nextAction: Selector("nextAction"), doneAction: Selector("doneAction"))
+        textField1.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction:"), nextAction: Selector("nextAction"), doneAction: Selector("doneAction"))
         textField1.setEnablePrevious(false, isNextEnabled: true)
         
-        textField2.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction"), nextAction: Selector("nextAction"), doneAction: Selector("doneAction"))
+        textField2.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction:"), nextAction: Selector("nextAction:"), doneAction: Selector("doneAction"))
 
-        textView3.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction"), nextAction: Selector("nextAction"), doneAction: Selector("doneAction"))
+        textView3.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction:"), nextAction: Selector("nextAction:"), doneAction: Selector("doneAction"))
 
-        textField4.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction"), nextAction: Selector("nextAction"), doneAction: Selector("doneAction"))
+        textField4.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: Selector("previousAction::"), nextAction: Selector("nextAction:"), doneAction: Selector("doneAction"))
         textField4.setEnablePrevious(false, isNextEnabled: true)
 
         textField5.inputAccessoryView = UIView()
     }
     
     
-    func previousAction((sender : UITextField!)) {
+    func previousAction(sender : UITextField) {
         
         if (textField4.isFirstResponder())
         {
@@ -50,7 +50,7 @@ class ManualToolbarViewController : UIViewController {
         }
     }
     
-    func nextAction((sender : UITextField!)) {
+    func nextAction(sender : UITextField) {
         
         if (textField1.isFirstResponder())
         {
@@ -66,7 +66,7 @@ class ManualToolbarViewController : UIViewController {
         }
     }
     
-    func doneAction((sender : UITextField!)) {
+    func doneAction(sender : UITextField) {
         self.view.endEditing(true)
     }
 
