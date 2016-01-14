@@ -375,6 +375,59 @@ public extension UIView {
         addRightButtonOnKeyboardWithText(text, target: target, action: action, titleText: title)
     }
     
+    public func addRightButtonOnKeyboard (b: UIBarButtonItem) {
+        
+        //If can't set InputAccessoryView. Then return
+        if self is UITextField || self is UITextView {
+            
+            //  Creating a toolBar for phoneNumber keyboard
+            let toolbar = IQToolbar()
+            
+            var items : [UIBarButtonItem] = []
+            
+            /*
+            50 done button frame.
+            24 distance maintenance
+            */
+            let buttonFrame = CGRectMake(0, 0, toolbar.frame.size.width-50.0-24, 44)
+            
+            let title = IQTitleBarButtonItem(frame: buttonFrame, title: nil)
+            items.append(title)
+            
+            //  Create a fake button to maintain flexibleSpace between doneButton and nilButton. (Actually it moves done button to right side.
+            let nilButton = IQBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+            items.append(nilButton)
+            
+            //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
+            let doneButton = b
+            items.append(doneButton)
+            
+            //  Adding button to toolBar.
+            toolbar.items = items
+            
+            //  Setting toolbar to keyboard.
+            if let textField = self as? UITextField {
+                textField.inputAccessoryView = toolbar
+                
+                switch textField.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            } else if let textView = self as? UITextView {
+                textView.inputAccessoryView = toolbar
+                
+                switch textView.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            }
+        }
+    }
+    
 
     ///------------------
     /// MARK: Cancel/Done
@@ -604,9 +657,9 @@ public extension UIView {
     @param nextAction Next button action name. Usually 'nextAction:(id)item'.
     @param doneAction Done button action name. Usually 'doneAction:(IQBarButtonItem*)item'.
     */
-    public func addPreviousNextDoneOnKeyboardWithTarget ( target : AnyObject?, previousAction : Selector, nextAction : Selector, doneAction : Selector) {
+    public func addPreviousNextDoneOnKeyboardWithTarget ( target : AnyObject?, previousAction : Selector, nextAction : Selector, doneAction : Selector, doneText: String?) {
         
-        addPreviousNextDoneOnKeyboardWithTarget(target, previousAction: previousAction, nextAction: nextAction, doneAction: doneAction, titleText: nil)
+        addPreviousNextDoneOnKeyboardWithTarget(target, previousAction: previousAction, nextAction: nextAction, doneAction: doneAction, titleText: nil, doneText: doneText)
     }
     
     /**
@@ -618,7 +671,7 @@ public extension UIView {
     @param doneAction Done button action name. Usually 'doneAction:(IQBarButtonItem*)item'.
     @param titleText text to show as title in IQToolbar'.
     */
-    public func addPreviousNextDoneOnKeyboardWithTarget ( target : AnyObject?, previousAction : Selector, nextAction : Selector, doneAction : Selector,  titleText: String?) {
+    public func addPreviousNextDoneOnKeyboardWithTarget ( target : AnyObject?, previousAction : Selector, nextAction : Selector, doneAction : Selector,  titleText: String?, doneText: String?) {
         
         //If can't set InputAccessoryView. Then return
         if self is UITextField || self is UITextView {
@@ -628,7 +681,17 @@ public extension UIView {
             var items : [UIBarButtonItem] = []
             
             //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-            let doneButton = IQBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: target, action: doneAction)
+            var doneButton: IQBarButtonItem
+            
+            if let _ = doneText {
+                doneButton = IQBarButtonItem(title: doneText, style: UIBarButtonItemStyle.Done, target: target, action: doneAction)
+            }else{
+                doneButton = IQBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: target, action: doneAction)
+                
+            }
+            
+            //doneButton.ti
+            doneButton.tintColor = UIColor.redColor()
             
             let prev : IQBarButtonItem
             let next : IQBarButtonItem
@@ -702,6 +765,67 @@ public extension UIView {
         }
     }
     
+    public func addPreviousNextDoneOnKeyboardWithTarget (previousButton : UIBarButtonItem, nextButton : UIBarButtonItem, doneButton : UIBarButtonItem,  titleText: String?) {
+        
+        //If can't set InputAccessoryView. Then return
+        if self is UITextField || self is UITextView {
+            //  Creating a toolBar for phoneNumber keyboard
+            let toolbar = IQToolbar()
+            
+            var items : [UIBarButtonItem] = []
+            
+            let prev  = previousButton
+            let next  = nextButton
+            
+            let fixed = IQBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            fixed.width = 23
+            
+            items.append(prev)
+            items.append(fixed)
+            items.append(next)
+            
+            /*
+            72.5 next/previous maximum x.
+            50 done button frame.
+            8+8 distance maintenance
+            */
+            let buttonFrame = CGRectMake(0, 0, toolbar.frame.size.width-72.5-50.0-16, 44)
+            
+            let title = IQTitleBarButtonItem(frame: buttonFrame, title: shouldHideTitle == true ? nil : titleText)
+            items.append(title)
+            
+            //  Create a fake button to maintain flexibleSpace between doneButton and nilButton. (Actually it moves done button to right side.
+            let nilButton = IQBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+            
+            items.append(nilButton)
+            items.append(doneButton)
+            
+            //  Adding button to toolBar.
+            toolbar.items = items
+            
+            //  Setting toolbar to keyboard.
+            if let textField = self as? UITextField {
+                textField.inputAccessoryView = toolbar
+                
+                switch textField.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            } else if let textView = self as? UITextView {
+                textView.inputAccessoryView = toolbar
+                
+                switch textView.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            }
+        }
+    }
+    
     /**
     Helper function to add ArrowNextPrevious and Done button on keyboard.
     
@@ -723,7 +847,7 @@ public extension UIView {
             }
         }
         
-        addPreviousNextDoneOnKeyboardWithTarget(target, previousAction: previousAction, nextAction: nextAction, doneAction: doneAction, titleText: title)
+        addPreviousNextDoneOnKeyboardWithTarget(target, previousAction: previousAction, nextAction: nextAction, doneAction: doneAction, titleText: title, doneText: nil)
     }
     
     ///--------------------------

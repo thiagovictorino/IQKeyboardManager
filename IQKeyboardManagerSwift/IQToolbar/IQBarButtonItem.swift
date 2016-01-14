@@ -26,6 +26,8 @@ import UIKit
 
 class IQBarButtonItem: UIBarButtonItem {
    
+
+    
     override class func initialize() {
 
         superclass()?.initialize()
